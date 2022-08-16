@@ -1,12 +1,14 @@
 package com.example.android_kotlin_template.src.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.android_kotlin_template.R
+import com.example.android_kotlin_template.config.BaseActivity
+import com.example.android_kotlin_template.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::class.java) {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
     }
 }
