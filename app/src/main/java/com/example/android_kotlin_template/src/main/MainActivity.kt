@@ -1,7 +1,8 @@
-package com.example.android_kotlin_template
+package com.example.android_kotlin_template.src.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.android_kotlin_template.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
