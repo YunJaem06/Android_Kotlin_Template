@@ -6,6 +6,8 @@ import android.view.View
 import com.example.android_kotlin_template.R
 import com.example.android_kotlin_template.config.BaseFragment
 import com.example.android_kotlin_template.databinding.FragmentHomeBinding
+import com.example.android_kotlin_template.src.main.home.models.PostSignUpRequest
+import com.example.android_kotlin_template.src.main.home.models.SignUpResponse
 import com.example.android_kotlin_template.src.main.home.models.UserResponse
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentInterface {
@@ -20,6 +22,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         binding.homeBtnTryPostHttpMethod.setOnClickListener {
             val email = binding.homeEtId.text.toString()
             val password = binding.homeEtPw.text.toString()
+            val postRequest = PostSignUpRequest(email = email, password = password,
+                confirmPassword = password, nickname = "text", phoneNumber = "010-0000-0000")
+            showLoadingDialog(requireContext())
+            HomeService(this).tryPostSignUp(postRequest)
         }
     }
 
@@ -33,6 +39,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     }
 
     override fun onGetUserFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
+
+    override fun onPostSignUpSuccess(response: SignUpResponse) {
+        dismissLoadingDialog()
+        binding.homeBtnTryPostHttpMethod.text = response.message
+        response.message?.let { showCustomToast(it) }
+    }
+
+    override fun onPostSignUpFailure(message: String) {
         dismissLoadingDialog()
         showCustomToast("오류 : $message")
     }
